@@ -12,3 +12,13 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans);
 }
+
+.container {
+  background: var(--color-background);
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
