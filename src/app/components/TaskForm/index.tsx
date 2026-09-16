@@ -1,14 +1,63 @@
 "use client"
 
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useState, useEffect } from "react"
 import TextArea from "../TextArea"
 import { db } from "../../services/firebase"
-import { addDoc, collection, serverTimestamp } from "firebase/firestore"
-export default function TaskForm(){
+import { 
+    addDoc,
+    collection,
+    serverTimestamp,
+    query,
+    where,
+    orderBy,
+    onSnapshot }
+ from "firebase/firestore"
+
+ interface listTaskType{
+    task: string,
+    created: string,
+    public: boolean,
+    user: string
+ }
+ interface userType {
+  user: {
+    email: string;
+  };
+
+  onTasksChange: (tasks: listTaskType[]) => void;
+}
+export default function TaskForm({user, onTasksChange}: userType){
     const [publicTask, setPublicTask] = useState(false)
     const [task, setTask] = useState("")
-    
 
+    useEffect(() =>{
+
+      async  function loadTasks() {
+        const taskRef = collection(db, "tasks")
+        const q = query(
+            taskRef,
+            orderBy("created", "desc"),
+            where("user", "==", user.email),
+            
+        )
+        onSnapshot(q, (snapshot) => {
+                const list = [] as listTaskType[]
+                snapshot.forEach((doc) => {
+                    list.push({
+                    task: doc.data().task,
+                    created: doc.data().created,
+                    public: doc.data().public,
+                    user: user.email
+                    })
+                })
+                
+                onTasksChange(list)
+            })
+            }
+
+            loadTasks()
+            
+    }, [user.email, onTasksChange])
     async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>){
         e.preventDefault()
 
@@ -18,7 +67,8 @@ export default function TaskForm(){
             await addDoc(collection(db, "tasks"), {
                 task: task,
                 created: serverTimestamp(),
-                public: publicTask
+                public: publicTask,
+                user: user.email
             })
 
             setTask("")
