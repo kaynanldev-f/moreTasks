@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { FaShare, FaTrash } from "react-icons/fa";
 import TaskForm from "../TaskForm";
-
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../services/firebase";
 interface ListTaskType {
+  id: string
   task: string;
   created: string;
   public: boolean;
@@ -22,8 +24,18 @@ export default function DashboardContent({
     const [taskList, setTaskList] = useState<ListTaskType[]>([]);
 
     function handleTasksChange(tasks: ListTaskType[]) {
-    setTaskList(tasks);
-  }
+      setTaskList(tasks);
+    }
+
+    async function deleteTask(id: string){
+      try{
+        await deleteDoc(doc(db, "tasks", id))
+        console.log(id)
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
 
     return(
         <>
@@ -48,7 +60,7 @@ export default function DashboardContent({
             
             <div className="mt-2 flex items-center justify-between">
               <p className="whitespace-pre-wrap text-background">{task.task}</p>
-              <button>
+              <button onClick={() => deleteTask(task.id)}>
                 <FaTrash size={20} color="#ea3140" className="cursor-pointer"/>
               </button>
             </div>

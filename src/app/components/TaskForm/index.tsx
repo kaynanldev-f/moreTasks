@@ -14,6 +14,7 @@ import {
  from "firebase/firestore"
 
  interface listTaskType{
+    id: string
     task: string,
     created: string,
     public: boolean,
@@ -44,6 +45,7 @@ export default function TaskForm({user, onTasksChange}: userType){
                 const list = [] as listTaskType[]
                 snapshot.forEach((doc) => {
                     list.push({
+                    id: doc.id,
                     task: doc.data().task,
                     created: doc.data().created,
                     public: doc.data().public,

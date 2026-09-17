@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../app/lib/auth";
 import { redirect } from "next/navigation";
-import TaskForm from "../components/TaskForm";
 import DashboardContent from "../components/DashboardContent";
 
 export default async function Dashboard() {
