@@ -5,6 +5,7 @@ import { FaShare, FaTrash } from "react-icons/fa";
 import TaskForm from "../TaskForm";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../services/firebase";
+import Link from "next/link";
 interface ListTaskType {
   id: string
   task: string;
@@ -52,9 +53,9 @@ export default function DashboardContent({
             {task.public && (
                 <div className="flex items-center  gap-2">
                     <label htmlFor="tag" className="bg-[#3183ff] px-1 py-1 text-[#fafafa] rounded-sm text-xs">PÚBLICO</label>
-                    <button className="bg-transparentborder-0 my-2 cursor-pointer">
+                    <Link href={`/detailsTask/${task.id}`} className="bg-transparent border-0 my-2 cursor-pointer">
                     <FaShare size={20} color="#3183ff"/>
-                </button>
+                    </Link>
             </div>
             )}          
             
