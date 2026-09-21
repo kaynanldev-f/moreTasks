@@ -6,6 +6,7 @@ interface ListTaskType {
   id: string;
   task: string;
   created: Date;
+  currentDate: string,
   public: boolean;
   user: string;
 }
@@ -26,5 +27,6 @@ export async function getTask(id: string){
     return{
         id: taskSnapshot.id,
         ...taskSnapshot.data(),
+        currentDate,
     } as ListTaskType
 }
