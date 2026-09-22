@@ -1,17 +1,16 @@
 import { redirect } from "next/navigation"
 import {getTask} from "../../lib/tasks"
-import TextArea from "../../components/TextArea"
-interface ListTaskType {
-  id: string
-  task: string;
-  created: string;
-  public: boolean;
-  user: string;
-}
+import DetailsForm from "../../components/DetailsForm"
+import { getServerSession } from "next-auth"
+import { authOptions } from "../../lib/auth"
+
 
 export default async function detailsTask({params}: {params: Promise<{id: string}>}){
     const {id} = await params
     const task = await getTask(id)
+    const session = await getServerSession(authOptions)
+
+    const user = session?.user?.email as string
 
     if(!task) {
         redirect("/")
@@ -27,11 +26,7 @@ export default async function detailsTask({params}: {params: Promise<{id: string
             </article>
         
             <h2 className="mb-4 my-10 text-3xl font-bold">Deixar comentário</h2>
-            <form action="">
-                <TextArea />
-                <button className="w-full mt-2 py-3 rounded-sm border-0 text-white bg-[#3183ff] text-lg cursor-pointer" type="submit">Enviar comentário</button>
-            </form>
-            
+            <DetailsForm  user={user} id={id}/>
         </main>
         </div>
     )
