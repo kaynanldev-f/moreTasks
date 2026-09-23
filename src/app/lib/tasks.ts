@@ -19,11 +19,9 @@ export async function getTask(id: string){
     if(!taskSnapshot.exists()){
         return null
     }
-    
-    
 
-    const data = taskSnapshot.data().created.toDate()
-    const currentDate = data.toLocaleDateString("pt-BR")
+    const date = taskSnapshot.data().created.toDate()
+    const currentDate = date.toLocaleDateString("pt-BR")
     return{
         id: taskSnapshot.id,
         ...taskSnapshot.data(),

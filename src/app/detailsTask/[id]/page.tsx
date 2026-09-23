@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import {getTask} from "../../lib/tasks"
 import DetailsForm from "../../components/DetailsForm"
+import DetailsComments from "../../components/DetailsComments"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../../lib/auth"
 
@@ -27,6 +28,7 @@ export default async function detailsTask({params}: {params: Promise<{id: string
         
             <h2 className="mb-4 my-10 text-3xl font-bold">Deixar comentário</h2>
             <DetailsForm  user={user} id={id}/>
+            <DetailsComments id={id} />
         </main>
         </div>
     )

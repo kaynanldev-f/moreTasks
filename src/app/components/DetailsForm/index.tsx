@@ -1,19 +1,22 @@
 "use client"
 
 import TextArea from "../TextArea"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { db } from "../../services/firebase"
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection} from "firebase/firestore"
 
 
  interface DetailsTaskType{
     id: string
     user: string
  }
+
+
 export default function DetailsForm({user, id}: DetailsTaskType){
     const [comment, setComment] = useState("")
 
 
+    
     async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault()
 
@@ -34,6 +37,8 @@ export default function DetailsForm({user, id}: DetailsTaskType){
             console.log(error)
         }
     }
+
+    
     return(
         <form action="" onSubmit={handleSubmit}>
                 <TextArea value={comment} onChange={(e) => setComment(e.target.value)}/>
