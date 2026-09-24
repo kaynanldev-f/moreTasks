@@ -8,11 +8,12 @@ import { addDoc, collection} from "firebase/firestore"
 
  interface DetailsTaskType{
     id: string
-    user: string
+    user: string,
+    email: string
  }
 
 
-export default function DetailsForm({user, id}: DetailsTaskType){
+export default function DetailsForm({user, email, id}: DetailsTaskType){
     const [comment, setComment] = useState("")
 
 
@@ -26,6 +27,7 @@ export default function DetailsForm({user, id}: DetailsTaskType){
         try{
              await addDoc(collection(db, "comments"),{
                 user: user,
+                email: email,
                 created: new Date(),
                 comment: comment,
                 idTask: id
