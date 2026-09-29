@@ -10,7 +10,7 @@ const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
 });
 export const metadata: Metadata = {
-  title: "More Tasks",
+  title: "Tasks+",
   description: "Tasks+ é uma aplicação web de gerenciamento de tarefas com Next.js, React, TypeScript e Firebase. Organize tarefas e interaja através de comentários.",
 };
 
