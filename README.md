@@ -4,7 +4,7 @@ Aplicação web para **organização de tarefas e interação entre usuários**,
 
 ## 📸 Preview
 
-![Tasks+ Dashboard](./screenshots/homeScreen.png)
+![Tasks+](./screenshots/homeScreen.png)
 
 🔗 **Demo:** https://more-tasks-two.vercel.app/
 
