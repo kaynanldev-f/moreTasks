@@ -1,6 +1,22 @@
 import Image from "next/image";
 import heroImage from "../../public/hero.svg";
-export default function Home() {
+
+import { collection, getCountFromServer } from "firebase/firestore"
+import { db } from "../app/services/firebase"
+export const revalidate = 60
+
+export default async function Home() {
+
+  const postsSnapshot = await getCountFromServer(
+    collection(db, "tasks")
+  )
+
+  const commentsSnapshot = await getCountFromServer(
+    collection(db, "comments")
+  )
+
+  const posts = postsSnapshot.data().count
+  const comments = commentsSnapshot.data().count
   return (
     <>
       <main className="flex-1 flex items-center justify-center">
@@ -17,10 +33,10 @@ export default function Home() {
           </h1>
           <div className="flex items-center justify-around gap-4 text-background font-bold">
             <section className="bg-[#fafafa] py-3 px-8 rounded-sm transition-transform hover:scale-105 duration-200 ease-in-out">
-              <span>+ 12 posts</span>
+              <span>+ {posts} posts</span>
             </section>
             <section className="bg-[#fafafa] py-3 px-8 rounded-sm transition-transform hover:scale-105 duration-200 ease-in-out">
-              <span>+ 90 comentários</span>
+              <span>+ {comments} comentários</span>
             </section>
           </div>
         </div>
@@ -28,3 +44,5 @@ export default function Home() {
     </>
   );
 }
+
+
